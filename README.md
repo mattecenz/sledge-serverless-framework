@@ -4,6 +4,12 @@
 
 ## Setting up a development environment
 
+Before running anything, update the submodules of the repository:
+
+```bash
+git submodule update --init --recursive
+```
+
 ### Native on Debian Host
 
 ```sh
@@ -37,21 +43,12 @@ To enter the docker environment, run:
 ./devenv.sh run
 ```
 
-The first time you enter this environment, run the following to copy the sledgert binary to /sledge/runtime/bin.
+Once you are in the container, you can run all the installation process (aWsm, sledge runtime, fibonacci test application) with:
 
 ```bash
-cd /sledge/runtime
-make clean all
+cd /sledge
+make all
 ```
-
-There are a set of benchmarking applications in the `/sledge/applications` directory. Run the following to compile all benchmarks runtime tests using the aWsm compiler and then copy all resulting `<application>.wasm.so` files to /sledge/runtime/bin.
-
-```bash
-cd /sledge/applications/
-make clean all
-```
-
-You now have everything that you need to execute your first serverless function on SLEdge
 
 To exit the container:
 

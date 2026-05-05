@@ -1,58 +1,37 @@
 SHELL:=/bin/bash
 
-.PHONY: all
-all: awsm libsledge runtime applications
+.PHONY: all awsm libsledge runtime apps clean
 
-.PHONY: clean
-clean: awsm.clean libsledge.clean runtime.clean applications.clean
+# The master target that compiles everything in the correct dependency order
+all: awsm libsledge runtime apps
+	@echo "========================================="
+	@echo "   Sledge Full Build Completed!"
+	@echo "========================================="
 
-.PHONY: submodules
-submodules:
-	git submodule update --init --recursive
+awsm:
+	@echo ">>> Building aWsm Compiler..."
+	cd /sledge/awsm && ./install_deb.sh
 
-.PHONY: install
-install: submodules wasm_apps all
-
-# aWsm: the WebAssembly to LLVM bitcode compiler
-.PHONY: awsm
-awsm: 
-	cd awsm && cargo build --release
-
-.PHONY: awsm.clean
-awsm.clean:
-	cd awsm && cargo clean
-
-# libsledge: the support library linked with LLVM bitcode emitted by aWsm when building *.so modules
-.PHONY: libsledge
 libsledge:
-	make -C libsledge dist/libsledge.a
+	@echo ">>> Building libsledge dynamic/static library..."
+	cd /sledge/libsledge && $(MAKE) all
 
-.PHONY: libsledge.clean
-libsledge.clean:
-	make -C libsledge clean
+runtime: libsledge
+	@echo ">>> Building Sledge Runtime..."
+	cd /sledge/runtime && $(MAKE) clean all
 
-# sledgert: the runtime that executes *.so modules
-.PHONY: runtime
-runtime:
-	make -C runtime
-
-
-.PHONY: runtime.clean
-runtime.clean:
-	make -C runtime clean
-
-# SLEdge Applications
-.PHONY: applications
-applications:
-	make -C applications all
-
-.PHONY: applications.clean
-applications.clean:
-	make -C applications clean
-
-# Instead of having two copies of wasm_apps, just link to the awsm repo's copy
 wasm_apps:
 	ln -sr awsm/applications/wasm_apps/ applications/
+
+apps: runtime
+	@echo ">>> Building Applications (Wasm Apps & Fibonacci)..."
+	$(MAKE) wasm_apps
+	cd /sledge/applications && $(MAKE) clean fibonacci.install
+
+clean:
+	cd /sledge/libsledge && make clean || true
+	cd /sledge/runtime && make clean || true
+	cd /sledge/applications && make clean || true
 
 # Tests
 .PHONY: test

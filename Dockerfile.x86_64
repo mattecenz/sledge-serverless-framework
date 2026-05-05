@@ -5,7 +5,7 @@ ENV LLVM_VERSION=13
 ENV WASI_SDK_VERSION=12
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG HEY_URL=https://hey-release.s3.us-east-2.amazonaws.com/hey_linux_amd64
+ARG HEY_URL=https://storage.googleapis.com/hey-releases/hey_linux_amd64
 ARG WASI_SDK_URL=https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$WASI_SDK_VERSION/wasi-sdk_$WASI_SDK_VERSION.0_amd64.deb
 ARG SHFMT_URL=https://github.com/mvdan/sh/releases/download/v3.2.4/shfmt_v3.2.4_linux_amd64
 ARG SHELLCHECK_URL=https://github.com/koalaman/shellcheck/releases/download/stable/shellcheck-stable.linux.x86_64.tar.xz

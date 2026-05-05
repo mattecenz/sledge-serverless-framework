@@ -122,8 +122,3 @@ ENV PATH=/sledge/runtime/bin:$PATH
 ENV PATH=/sledge/awsm/target/release:$PATH
 ENV LIBRARY_PATH=/sledge/libsledge/dist:$LIBRARY_PATH
 ENV LD_LIBRARY_PATH=/sledge/runtime/bin:$LD_LIBRARY_PATH
-
-# Automatically trust Sledge directories to bypeass Git ownershit safety errors
-RUN git config --global --add safe.directory /sledge && \
-	git config --global --add safe.directory /sledge/awsm && \
-	git config --global --add safe.directory /sledge/libsledge

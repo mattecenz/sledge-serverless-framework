@@ -47,6 +47,7 @@ Once you are in the container, you can run all the installation process (aWsm, s
 
 ```bash
 cd /sledge
+git config --global --add safe.directory /sledge/awsm
 make all
 ```
 

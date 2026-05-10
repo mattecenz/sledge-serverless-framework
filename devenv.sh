@@ -91,7 +91,14 @@ envsetup() {
 	# Run the sledge-dev:latest image as a background container named sledge-dev with the project directly mounted at /sledge
 	echo "Creating the build container ${SYS_DOC_NAMETAG} from the image ${SYS_DOC_DEVNAMETAG}"
 
-	host_dir="$(cd "$(dirname "${0}")" && pwd -P || exit 1)"
+	if [ -n "$HOST_PROJECT_PATH" ]; then
+		# If we are in the docker, the host path is the project path + /sledge
+		host_dir="${HOST_PROJECT_PATH}/sledge"
+	else
+		# Fallback for running locally on a host without the orchestrator
+		host_dir="$(cd "$(dirname "${0}")" && pwd -P || exit 1)"
+	fi
+
 	echo "Bind mounting $host_dir at $HOST_SYS_MOUNT"
 
 	docker run \

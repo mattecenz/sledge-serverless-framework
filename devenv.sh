@@ -140,6 +140,14 @@ envrun() {
 		echo "Container is running" >&2
 	else
 
+		if [ -n "$HOST_PROJECT_PATH" ]; then
+			# If we are in the docker, the host path is the project path + /sledge
+			host_dir="${HOST_PROJECT_PATH}/sledge"
+		else
+			# Fallback for running locally on a host without the orchestrator
+			host_dir="$(cd "$(dirname "${0}")" && pwd -P || exit 1)"
+		fi
+
 		echo "Starting ${SYS_DOC_NAME}"
 		docker run \
 			--privileged \

@@ -67,7 +67,7 @@ envsetup() {
 	echo "Setting up ${SYS_NAME}"
 
 	echo "Updating git submodules"
-	git submodule update --init --recursive 2> /dev/null || :d
+	git submodule update --init --recursive 2> /dev/null || true
 
 	echo "Using Dockerfile.$(uname -m)"
 	rm -f Dockerfile

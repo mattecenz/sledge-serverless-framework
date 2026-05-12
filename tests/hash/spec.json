@@ -4,8 +4,8 @@
 		"port": 10030,
 		"routes": [
 			{
-				"route": "/fib",
-				"path": "fibonacci.wasm.so",
+				"route": "/hash",
+				"path": "hash.wasm.so",
 				"http-resp-content-type": "text/plain"
 			}
 		]

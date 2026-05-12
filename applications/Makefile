@@ -22,6 +22,7 @@ all: \
 	cifar10.install \
 	empty.install \
 	fibonacci.install \
+	hash.install \
 	gocr.install \
 	gps_ekf.install \
 	license_plate_detection.install \
@@ -86,6 +87,13 @@ exit.install: ../runtime/bin/exit.wasm.so
 
 .PHONY: fibonacci.install
 fibonacci.install: ../runtime/bin/fibonacci.wasm.so
+
+.PHONY: hash.install
+hash.install: ../runtime/bin/hash.wasm.so
+	cp wasm_apps/hash/hash.wasm.so /sledge/runtime/bin
+
+../runtime/bin/hash.wasm.so: wasm_apps/hash/hash.wasm
+	${AWSMCC} ${AWSMFLAGS} $< -o $@ -L/sledge/libsledge/dist -lsledge
 
 .PHONY: asc-fib.install
 asc-fib.install: ../runtime/bin/asc-fib.wasm.so

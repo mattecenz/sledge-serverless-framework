@@ -26,7 +26,7 @@ wasm_apps:
 apps: runtime
 	@echo ">>> Building Applications (Wasm Apps & Fibonacci)..."
 	$(MAKE) wasm_apps
-	cd /sledge/applications && $(MAKE) clean fibonacci.install
+	cd /sledge/applications && $(MAKE) clean fibonacci.install hash.install
 
 clean:
 	cd /sledge/libsledge && make clean || true
